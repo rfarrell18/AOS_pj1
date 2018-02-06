@@ -11,10 +11,26 @@
  * File:   main.c
  * Author: RFarrell
  * Project: Kenel Programming 1
- * Phase 1.1 - Hash - Buckets
+ * Phase 1.2 - Hash table
  * Created on February 6, 2018, 12:37 AM
  */
  /*
+  * This file in its current state uses the given structure to create a
+  * Linux kernel DDL (circular list). It accepts 3 First names, day, month year
+  * with one space in between. It prints the list, then deletes the list by
+  * freeing the memory that it dynamically allocated to each list item. 6:32AM
+  *
+  * Next phase is to connect this with the HashTable & HashFunction
+  */
+
+ /*
+  * File:   main.c
+  * Author: RFarrell
+  * Project: Kenel Programming 1
+  * Created on February 6, 2018, 12:37 AM
+  */
+
+  /*
   * This file in its current state uses the given structure to create a
   * Linux kernel DDL (circular list). It accepts 3 First names, day, month year
   * with one space in between. It prints the list, then deletes the list by
@@ -40,11 +56,13 @@
      int day;
      int month;
      int year;
+
      struct list_head list;
  };
 
  struct hashEntry {
-     int NameHashKey[100];
+     int NameHashKey;
+     int NameHashIndex;
 
      struct list_head list;
  };
@@ -58,6 +76,7 @@
   */
  int main(int argc, char** argv) {
      struct birthday *tmp; //holds the address of a newly created node
+     struct hashEntry *tmpHash;
      struct list_head *pos; //position / for loop control number
      struct list_head *q;
      int NumOfBuckets = 30;
@@ -90,22 +109,27 @@
      INIT_LIST_HEAD(&myList.list);//declares and initializes the list
      INIT_LIST_HEAD(&myHashList.list);
      //LIST_HEAD(myList);
+
      //Adding elements to the list
 
      //dynamically allocate memory in the size of the struct birthday
      //return the pointer to this new struct memory area to the pointer tmp
-     for(i=3; i!=0; --i){
+     for(i=2; i!=0; --i){
      tmp = (struct birthday *)malloc(sizeof(struct birthday));
      INIT_LIST_HEAD(&tmp->list); //initialize the dynamically allocated list head
      printf("Enter the Name, Day, Month, and Year: ");
      scanf("%s %d %d %d", &tmp->name, &tmp->day, &tmp->month, &tmp->year);
-
 
      /* Add the new item pointed to by the pointer tmp to the list of items
       in mylist */
      list_add(&(tmp->list), &(myList.list));
      j++;
      }
+     /* in hashEntry there are two elements one hold the hash of what was entered
+      the other holds the pointer value to the data from line 86*/
+     tmpHash = (struct hashEntry *)malloc(sizeof(struct hashEntry));
+     INIT_LIST_HEAD(&tmpHash->list); //initialize hash table
+     printf("does this print the current element? :%d%d%d%d%d", *tmp->name,(*tmp->name)+1,(*tmp->name)+2,(*tmp->name)+3,(*tmp->name)+4);
      printf("\n");
 
      //returns a pointer to a particular list item and places it in tmp
