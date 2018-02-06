@@ -9,19 +9,34 @@
 * Due Feb 6 by 2PM.
 */
 
-#include <stdio>
-#include <stdlib>
-#include "list.h"
+//my hash
+/* This basic hash preforms a weighted calculation of the ASCII value of the
+     character in the array, against an increasing weight based on the position
+     the character has in the given string. */
 
-struct birthday {
-  char name[100];
-  int day;
-  int month;
-  int year;
-  /*
-  * (kernel lisked list format)
-  * list.h will connect this statement and will provide the doubly linked lists
-  * capability
-  */
-  struct list_head list;
+#ifndef MYHASHATTEMPT_H
+#define MYHASHATTEMPT_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include <stdlib.h>
+
+
+
+    int myHash(const char *a, int len){
+    int temp;
+    for(int i=0; i<len; i++)
+    {
+        temp+=a[i];
+        temp*=(i+2);
+    }
 }
+
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* MYHASHATTEMPT_H */
